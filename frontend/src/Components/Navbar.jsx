@@ -1,9 +1,10 @@
 import React from "react";
-import { MenuMenu, MenuItem, Input, Menu } from "semantic-ui-react";
+import { MenuItem, Menu } from "semantic-ui-react";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
 import logo from "../Assests/logo.png";
+import avatar from '../Assests/avatar.png'
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -46,13 +47,6 @@ const Navbar = () => {
             
           />
         </MenuItem>
-        {/* <MenuItem name="home" className="menuitem" /> */}
-
-        {/* <MenuMenu position="right">
-          <MenuItem>
-            <Input icon="search" placeholder="Search..." />
-          </MenuItem>
-        </MenuMenu> */}
         <MenuItem className="menuitem" position="right">
           <StyledBadge
             overlap="circular"
@@ -61,9 +55,8 @@ const Navbar = () => {
             className="menuitem"
           >
             <Avatar
-              alt="Remy Sharp"
-              src=""
-              className="menuitem"
+              alt="user"
+              src={avatar}
             />
           </StyledBadge>
         </MenuItem>

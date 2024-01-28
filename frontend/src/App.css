@@ -1,11 +1,11 @@
 .navbar{
-  background-color: rgb(122, 113, 117)!important;
+  background-color: rgb(255, 255, 255)!important;
 }
 .menuitem{
   cursor: pointer;
   font-size: large;
   font-weight: bold!important;
-  color: rgb(255, 255, 255)!important;
+  color: rgb(92, 86, 86)!important;
 }
 .logo{
   width: 500;
