@@ -1,12 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
-import Navbar from './Components/Navbar';
+import "./App.css";
+import Navbar from "./Components/Navbar";
+import Allroutes from "./Pages/Allroutes";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+const theme = createTheme();
 
 function App() {
   return (
-    <div className="App">
-      <Navbar/>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Navbar />
+      <Allroutes />
+    </ThemeProvider>
   );
 }
 
