@@ -10,10 +10,10 @@ function Login () {
   const [email, setEmail] = useState('');
   const [password , setPassword] = useState('');
 
-  const navigate = useNavigate();
   const toast = useToast()
+  const navigate = useNavigate()
   
-  const login = () => {
+  const login = async () => {
     const payload = JSON.stringify({ email, password });
 
     return fetch("https://school-backend-saurav01.up.railway.app/user/login", {
@@ -25,7 +25,8 @@ function Login () {
     })
         .then((res) => res.json())
         .then((res) => {
-            if (res.success) {
+            if (res.message === "login succcessful") {
+                
                 const token = res.userData.token;
                 localStorage.setItem("Token", token);
 
@@ -36,13 +37,12 @@ function Login () {
                     duration: 5000,
                     isClosable: true,
                 });
-
                 navigate('/')
             } else {
                 toast({
                     position: 'top',
                     title: res.message || "Login failed",
-                    status: "error",
+                    status: "warning",
                     duration: 5000,
                     isClosable: true,
                 });
