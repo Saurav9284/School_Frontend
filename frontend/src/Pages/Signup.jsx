@@ -9,24 +9,20 @@ import {
 } from "semantic-ui-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Flex, useToast } from "@chakra-ui/react";
-import { Checkbox } from "@chakra-ui/react";
+import { useToast, Select } from "@chakra-ui/react";
 
 function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [checkedItems, setCheckedItems] = useState([false, false, false]);
-  const allChecked = checkedItems.every(Boolean);
-  const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
+  const [role, setRole] = useState([]);
 
   const navigate = useNavigate();
   const toast = useToast();
 
-  const singnup = (url,obj) => {
-    const payload = JSON.stringify(obj);
-
-    fetch(url, {
+  const singnup = () => {
+    const payload = JSON.stringify({ name, email, role, password });
+    fetch("https://school-backend-saurav01.up.railway.app/user/signup", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -68,28 +64,13 @@ function Signup() {
       });
   };
 
-  const handleSignup = (e) => {
-    e.preventDefault()
-    let arr = []
-    if (checkedItems[0]) {
-        arr.push("CREATER")
-    }
-    if (checkedItems[1]) {
-        arr.push("VIEW")
-    }
-    if (checkedItems[2]) {
-        arr.push("VIEW_ALL")
-    }
-    singnup("https://school-backend-saurav01.up.railway.app/user/signup", { email, password, name, role: arr })
-}
-
   return (
     <Grid textAlign="center" style={{ height: "70vh" }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as="h2" color="black" textAlign="center">
           Create your account
         </Header>
-        <Form size="large" onSubmit={handleSignup}>
+        <Form size="large" onSubmit={singnup}>
           <Segment stacked>
             <Form.Input
               fluid
@@ -109,64 +90,16 @@ function Signup() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <Flex flexDir={"column"}>
-              <Checkbox
-                isChecked={allChecked}
-                isIndeterminate={isIndeterminate}
-                onChange={(e) =>
-                  setCheckedItems([
-                    e.target.checked,
-                    e.target.checked,
-                    e.target.checked,
-                  ])
-                }
-                color={"blue.800"}
-              >
-                Choose Your Roles
-              </Checkbox>
-              <Flex pl={6} mt={1} gap={"10px"}>
-                <Checkbox
-                  isChecked={checkedItems[0]}
-                  onChange={() =>
-                    setCheckedItems([
-                      !checkedItems[0],
-                      checkedItems[1],
-                      checkedItems[2],
-                    ])
-                  }
-                  color={"gray.500"}
-                >
-                  Maker
-                </Checkbox>
-                <Checkbox
-                  isChecked={checkedItems[1]}
-                  onChange={() =>
-                    setCheckedItems([
-                      checkedItems[0],
-                      !checkedItems[1],
-                      checkedItems[2],
-                    ])
-                  }
-                  color={"gray.500"}
-                >
-                  Reader
-                </Checkbox>
-                <Checkbox
-                  isChecked={checkedItems[2]}
-                  onChange={() =>
-                    setCheckedItems([
-                      checkedItems[0],
-                      checkedItems[1],
-                      !checkedItems[2],
-                    ])
-                  }
-                  color={"gray.500"}
-                >
-                  Read All
-                </Checkbox>
-              </Flex>
-            </Flex>
-            <br/>
+            <Select
+              placeholder="Select Role"
+              onChange={(e) => setRole(e.target.value)}
+            >
+              <option value="CREATER">Maker</option>
+              <option value="VIEWER">Reader</option>
+              <option value="VIEW_ALL">Read All</option>
+            </Select>
+
+            <br />
             <Form.Input
               fluid
               icon="lock"
